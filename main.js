@@ -40,6 +40,7 @@
 				card.buildCard(parentFrag);
 			}
 			deck_div.appendChild(parentFrag);
+			this.stack(deck_div);
 		}
 	}
 
@@ -59,6 +60,14 @@
 		this.gameDeck.buildDeck(this.deck_div);
 	}
 	// 	stack
+	Deck.prototype.stack = function(deck_div) {
+		var cards = deck_div.children;
+		for (var i = cards.length -1; i >= 0; i--) {
+			cards[i].style.top = i + "px";
+			cards[i].style.left = i + "px";
+			cards[i].classList.add("stacked_card");
+		}
+	}
 
 	// Card
 	var Card = function() {
@@ -94,13 +103,18 @@
 
 			this.cardCont.id = this.id;
 			this.cardCont.appendChild(flipDiv);
-			this.cardCont.onclick = function(e) {
-			  e.currentTarget.classList.toggle("flip_card");
-			  e.currentTarget.classList.toggle("slide_over");
-			}
+			this.cardCont.onclick = cardClick;
 			parentFrag.appendChild(this.cardCont);
 		}
 
+	}
+	var counter = 0;
+
+	function cardClick (e) {
+		e.currentTarget.classList.toggle("flip_card");
+		e.currentTarget.classList.toggle("slide_over");
+		e.currentTarget.style.zIndex = counter;
+		counter++;
 	}
 
 	// Discard Pile
