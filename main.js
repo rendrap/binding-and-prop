@@ -15,12 +15,11 @@
 		this.gameDeck = new Deck(this.deck_div, option);
 		this.gameDeck.buildDeck();
 
-		var suffleBtn = document.createElement("button");
-		suffleBtn.innerHTML = "Shuffle";
-		suffleBtn.onclick = function() {
-			console.log(this);
-		}
-		info_div.appendChild()
+		var shuffleBtn = document.createElement("button");
+		shuffleBtn.innerHTML = "Shuffle";
+		shuffleBtn.onclick = this.gameDeck.shuffle.bind(this);
+
+		this.info_div.appendChild(shuffleBtn);
 		// Discard pile
 		// Rules
 		this.el.appendChild(this.info_div);
@@ -43,6 +42,23 @@
 			deck_div.appendChild(parentFrag);
 		}
 	}
+
+	// Cards
+	// ----
+	// shuffle
+	Deck.prototype.shuffle = function () {
+		var cardsToShuffle = this.gameDeck.deckData;
+		var m = cardsToShuffle.length, t, i;
+		while(m) {
+			i = Math.floor(Math.random() * m--);
+			t = cardsToShuffle[m];
+			cardsToShuffle[m] = cardsToShuffle[i];
+			cardsToShuffle[i] = t;
+		}
+		this.gameDeck.deckData = cardsToShuffle;
+		this.gameDeck.buildDeck(this.deck_div);
+	}
+	// 	stack
 
 	// Card
 	var Card = function() {
