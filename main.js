@@ -108,14 +108,18 @@
 		}
 
 	}
-	var counter = 0;
 
-	function cardClick (e) {
+	var cardClick = (function(e) {
+		var counter = 0;
+		return function (e) {
 		e.currentTarget.classList.toggle("flip_card");
 		e.currentTarget.classList.toggle("slide_over");
 		e.currentTarget.style.zIndex = counter;
 		counter++;
-	}
+		}
+	})()
+
+
 
 	// Discard Pile
 	var DiscardPile = function() {
